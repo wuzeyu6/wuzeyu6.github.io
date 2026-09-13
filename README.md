@@ -109,7 +109,7 @@ Dr. Junchao Wu / Shenzhen Technology University / Prof. Hang Yin 六个链接）
 
 访问地址就是 **https://wuzeyu6.github.io/**，最干净。仓库名必须是 `<用户名>.github.io`。
 
-**本目录的 git 仓库已经初始化好了**（`main` 分支已提交一次，`origin` 已指向
+**本目录的 git 仓库已经初始化好了**（`main` 分支已提交，`origin` 已指向
 `https://github.com/wuzeyu6/wuzeyu6.github.io.git`），所以只剩两步：
 
 **第 1 步｜在 GitHub 上建仓库**

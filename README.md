@@ -109,10 +109,31 @@ Dr. Junchao Wu / Shenzhen Technology University / Prof. Hang Yin 六个链接）
 
 访问地址就是 **https://wuzeyu6.github.io/**，最干净。仓库名必须是 `<用户名>.github.io`。
 
-**本目录的 git 仓库已经初始化好了**（`main` 分支已提交，`origin` 已指向
-`https://github.com/wuzeyu6/wuzeyu6.github.io.git`），所以只剩两步：
+**现状（2026-09-14）**：仓库 `wuzeyu6/wuzeyu6.github.io` **已经建好了**（Public、目前为空），
+本地仓库也已初始化（`main` 分支已有提交，`origin` 指向
+`https://github.com/wuzeyu6/wuzeyu6.github.io.git`）。**只差把提交推上去。**
 
-**第 1 步｜在 GitHub 上建仓库**
+---
+
+### 方式 A：GitHub Desktop（推荐，完全不用 Token）
+
+你电脑上已经装了 **GitHub Desktop**，而且**已用 `wuzeyu6` 登录**
+（OAuth 凭据在钥匙串的 `GitHub - https://api.github.com` 条目下）。
+走这条路**不需要创建 Personal Access Token**：
+
+1. 打开 **GitHub Desktop**
+2. 菜单 **File → Add Local Repository…**
+3. 选 `/Users/wu/WorkBuddy/2026-09-13-23-32-04/site`，点 **Add Repository**
+4. 顶部出现 **Push origin** 按钮，点它
+
+等 1~2 分钟访问 https://wuzeyu6.github.io/ 。
+以后改完页面：Desktop 里填一句 Summary → **Commit to main** → **Push origin**。
+
+---
+
+### 方式 B：命令行 + Personal Access Token
+
+#### 第 1 步｜建仓库（已完成，只有换仓库名时才需要）
 
 打开 https://github.com/new ，填：
 
@@ -127,7 +148,7 @@ Dr. Junchao Wu / Shenzhen Technology University / Prof. Hang Yin 六个链接）
 点 **Create repository**。建好后页面会显示一堆 `git remote add origin …` 的命令，
 **不用管**，本地已经配好了。
 
-**第 2 步｜在终端里 push**
+#### 第 2 步｜在终端里 push
 
 ```bash
 cd /Users/wu/WorkBuddy/2026-09-13-23-32-04/site
@@ -140,22 +161,35 @@ git push -u origin main
 - **Password**：**不能填 GitHub 登录密码**（GitHub 2021 年起已停用密码认证），
   必须填 **Personal Access Token**。
 
+> ⚠️ **填错就会报** `remote: Invalid username or token. Password authentication is
+> not supported for Git operations.` —— 这个报错 100% 是「密码栏填了账号密码（或
+> 过期/权限不足的 Token）」，与仓库、代码无关。
+> 另外注意**不要把 Token 填进 Username 栏**。
+
 **怎么拿 Token**：GitHub 右上角头像 → Settings → 左侧拉到底 **Developer settings**
-→ **Personal access tokens** → **Tokens (classic)** → **Generate new token (classic)**
-→ 勾选 **`repo`** 这一个权限 → 有效期自选（建议 90 天）→ Generate
-→ 把 `ghp_` 开头的那串**复制下来**（离开页面就再也看不到了）。
+→ **Personal access tokens**。
 
-下次再 push 时，macOS 的钥匙串（git 已配置 `credential.helper=osxkeychain`）
-会自动记住，不用反复输入。
+GitHub 现在默认给你建 **Fine-grained token**，要选：
 
-**第 3 步｜等待上线**
+- **Repository access** → 选 `wuzeyu6.github.io`（或 All repositories）
+- **Permissions → Repository permissions → Contents** → 设为 **Read and write**
+
+（如果改用 **Tokens (classic)**，则勾 **`repo`** 这一个权限即可。）
+
+有效期自选（建议 90 天）→ Generate → 把 `ghp_` / `github_pat_` 开头那串
+**复制下来**（离开页面就再也看不到了）。粘贴时**注意不要带上首尾空格或换行**。
+
+下次再 push 时，macOS 钥匙串（git 已配置 `credential.helper=osxkeychain`）
+会记住，不用反复输入。
+
+#### 第 3 步｜等待上线
 
 推完后等 1~2 分钟，浏览器打开 **https://wuzeyu6.github.io/** 即可。
 仓库 **Settings → Pages** 里能看到部署状态（分支应为 `main`、目录 `/ (root)`）。
 
 ---
 
-### 方式二：项目站
+### 自选仓库名：项目站形式
 
 如果你不想用 `wuzeyu6.github.io` 这个仓库名，可以建任意名字的仓库（比如 `homepage`），
 访问地址变成 `https://wuzeyu6.github.io/homepage/`。区别是多一步手动开启：
@@ -170,7 +204,9 @@ git push -u origin main
 
 ### 以后怎么更新
 
-改完 `index.html` 后：
+**用 GitHub Desktop**：改完文件 → 填 Summary → Commit to main → Push origin。
+
+**用命令行**：
 
 ```bash
 cd /Users/wu/WorkBuddy/2026-09-13-23-32-04/site
@@ -180,8 +216,9 @@ git push
 ```
 
 push 后 1 分钟左右线上自动更新（Pages 有缓存，偶尔要等更久）。
-本机没装 `gh`（GitHub CLI），装一个的话 `brew install gh && gh auth login` 之后
-可以省掉手工建仓库和 Token 的步骤。
+
+本机**没装 `gh`（GitHub CLI）也没装 Homebrew**，所以 `brew install gh` 那条路走不通；
+有 GitHub Desktop 就够了，不必再装。
 
 ## 本地预览
 

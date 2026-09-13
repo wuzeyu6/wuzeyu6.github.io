@@ -13,7 +13,8 @@
 │   └── img/
 │       ├── photo.png       # 头像（400×400）
 │       └── favicon.svg     # 浏览器标签页图标
-└── .nojekyll               # 让 GitHub Pages 不要跑 Jekyll
+├── .nojekyll               # 让 GitHub Pages 不要跑 Jekyll
+└── .gitignore              # 忽略 .DS_Store
 ```
 
 ## 已经填好的内容
@@ -104,21 +105,83 @@ Dr. Junchao Wu / Shenzhen Technology University / Prof. Hang Yin 六个链接）
 | A Hybrid Medium and Long-Term Relative Humidity Point and Interval Prediction Method… | Mathematics, 11(14), 3247, 2023 | doi:10.3390/math11143247 |
 | A Multistep Interval Prediction Method… for Egg Production Rate | Agriculture, 13(6), 1255, 2023 | doi:10.3390/agriculture13061255 |
 
-## 部署到 GitHub Pages
+## 部署到 GitHub Pages（推荐：用户站）
 
-**方式一：用户站**（访问地址就是 `https://你的用户名.github.io`，推荐）
+访问地址就是 **https://wuzeyu6.github.io/**，最干净。仓库名必须是 `<用户名>.github.io`。
 
-1. 在 GitHub 新建一个仓库，名字必须是 `<你的用户名>.github.io`
-2. 把本目录下**所有文件和文件夹**（`index.html`、`assets/`、`.nojekyll`，注意不要把外层文件夹本身传上去）push 到仓库的 `main` 分支
-3. 等 1~2 分钟，直接访问 `https://你的用户名.github.io`
+**本目录的 git 仓库已经初始化好了**（`main` 分支已提交一次，`origin` 已指向
+`https://github.com/wuzeyu6/wuzeyu6.github.io.git`），所以只剩两步：
 
-**方式二：项目站**（访问地址是 `https://你的用户名.github.io/仓库名/`）
+**第 1 步｜在 GitHub 上建仓库**
 
-1. 新建一个任意名字的仓库，把文件 push 上去
-2. 进仓库 **Settings → Pages** → Source 选 `Deploy from a branch`，分支选 `main`、目录选 `/ (root)` → Save
-3. 等 1~2 分钟，访问 `https://你的用户名.github.io/仓库名/`
+打开 https://github.com/new ，填：
 
-页面里所有链接都是相对路径，两种方式都不需要改代码。
+| 字段 | 填什么 |
+| --- | --- |
+| Repository name | `wuzeyu6.github.io` ← **必须完全一致** |
+| Description | 随便，可留空 |
+| Public / Private | 选 **Public**（私有仓库的 Pages 需要付费账号） |
+| Add a README file | **不要勾**（勾了会和本地提交冲突，得先 pull 一次） |
+| .gitignore / license | **都不选**（本地已经有 `.gitignore` 了） |
+
+点 **Create repository**。建好后页面会显示一堆 `git remote add origin …` 的命令，
+**不用管**，本地已经配好了。
+
+**第 2 步｜在终端里 push**
+
+```bash
+cd /Users/wu/WorkBuddy/2026-09-13-23-32-04/site
+git push -u origin main
+```
+
+第一次会弹出认证：
+
+- **Username**：`wuzeyu6`
+- **Password**：**不能填 GitHub 登录密码**（GitHub 2021 年起已停用密码认证），
+  必须填 **Personal Access Token**。
+
+**怎么拿 Token**：GitHub 右上角头像 → Settings → 左侧拉到底 **Developer settings**
+→ **Personal access tokens** → **Tokens (classic)** → **Generate new token (classic)**
+→ 勾选 **`repo`** 这一个权限 → 有效期自选（建议 90 天）→ Generate
+→ 把 `ghp_` 开头的那串**复制下来**（离开页面就再也看不到了）。
+
+下次再 push 时，macOS 的钥匙串（git 已配置 `credential.helper=osxkeychain`）
+会自动记住，不用反复输入。
+
+**第 3 步｜等待上线**
+
+推完后等 1~2 分钟，浏览器打开 **https://wuzeyu6.github.io/** 即可。
+仓库 **Settings → Pages** 里能看到部署状态（分支应为 `main`、目录 `/ (root)`）。
+
+---
+
+### 方式二：项目站
+
+如果你不想用 `wuzeyu6.github.io` 这个仓库名，可以建任意名字的仓库（比如 `homepage`），
+访问地址变成 `https://wuzeyu6.github.io/homepage/`。区别是多一步手动开启：
+
+1. 建仓库时**同样不要**勾 README / gitignore
+2. `git remote set-url origin https://github.com/wuzeyu6/<仓库名>.git` 后 push
+3. 进仓库 **Settings → Pages** → Source 选 `Deploy from a branch` →
+   分支 `main`、目录 `/ (root)` → **Save**
+4. 等 1~2 分钟访问 `https://wuzeyu6.github.io/<仓库名>/`
+
+页面里所有链接都是相对路径，两种方式都不用改代码。
+
+### 以后怎么更新
+
+改完 `index.html` 后：
+
+```bash
+cd /Users/wu/WorkBuddy/2026-09-13-23-32-04/site
+git add -A
+git commit -m "Update publications"
+git push
+```
+
+push 后 1 分钟左右线上自动更新（Pages 有缓存，偶尔要等更久）。
+本机没装 `gh`（GitHub CLI），装一个的话 `brew install gh && gh auth login` 之后
+可以省掉手工建仓库和 Token 的步骤。
 
 ## 本地预览
 
